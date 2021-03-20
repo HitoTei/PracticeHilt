@@ -5,4 +5,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="text">TEXT</string>
+    <string name="ordinary_ending">普通の語尾</string>
+    <string name="question_ending">疑問文の語尾</string>
+    <string name="convert">変換</string>
 </resources>
