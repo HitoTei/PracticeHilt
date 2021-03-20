@@ -35,7 +35,8 @@ class TextViewModel @Inject constructor(
         fun changeEnding(original: String, ordinaryEnding: String, questionEnding: String): String {
             if (original.isEmpty()) return ""
             var result = ""
-            val normalEndingCharList = arrayListOf('。', '!', '！', '」', '…', '\n', '　', ')', '）')
+            val normalEndingCharList =
+                arrayListOf('。', '!', '！', '」', '…', '\n', '　', ')', '）', '」', '』', '】', '.')
             val questionEndingCharList = arrayListOf('?', '？')
             val ordinaryEndingList = ordinaryEnding.split(' ')
             val questionEndingList = questionEnding.split(' ')
