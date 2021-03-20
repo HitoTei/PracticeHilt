@@ -1,15 +1,12 @@
 package com.example.practicehilt.ui
 
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
+import javax.inject.Singleton
 
-@ActivityScoped
+@Singleton
 class TextViewModel @Inject constructor(
     private val viewModel: EndOfWordViewModel
 ) : ViewModel() {
@@ -18,24 +15,30 @@ class TextViewModel @Inject constructor(
     private val _endingChanged = MutableLiveData("")
     val endingChanged: LiveData<String> = _endingChanged
 
-    fun onButtonClicked() {
-        _endingChanged.value = convert(
+    private val _doCopy = MutableLiveData(false)
+    val doCopy: LiveData<Boolean> = _doCopy
+
+    fun covert() {
+        _endingChanged.value = changeEnding(
             text.value ?: return,
             viewModel.ordinaryEnding.value ?: "",
             viewModel.questionEnding.value ?: ""
         )
     }
 
-    fun copyConverted(){
-        // TODO: コピーを実装する
+    fun copyConverted() {
+        _doCopy.value = true
     }
 
     companion object {
         @JvmStatic
-        fun convert(original: String, ordinaryEnding: String, questionEnding: String): String {
+        fun changeEnding(original: String, ordinaryEnding: String, questionEnding: String): String {
+            if (original.isEmpty()) return ""
             var result = ""
-            val normalEndingCharList = arrayListOf('。', '!', '！')
+            val normalEndingCharList = arrayListOf('。', '!', '！', '」', '…', '\n', '　', ')', '）')
             val questionEndingCharList = arrayListOf('?', '？')
+            val ordinaryEndingList = ordinaryEnding.split(' ')
+            val questionEndingList = questionEnding.split(' ')
 
             val isPreCharNormal = { index: Int ->
                 var value = index > 0
@@ -49,12 +52,14 @@ class TextViewModel @Inject constructor(
             original.forEachIndexed { index, it ->
                 if (isPreCharNormal(index)) {
                     if (it in normalEndingCharList)
-                        result += ordinaryEnding
+                        result += ordinaryEndingList.random()
                     if (it in questionEndingCharList)
-                        result += questionEnding
+                        result += questionEndingList.random()
                 }
                 result += it
             }
+            if (original[original.lastIndex] !in normalEndingCharList)
+                result += ordinaryEndingList.random()
             return result
         }
     }
