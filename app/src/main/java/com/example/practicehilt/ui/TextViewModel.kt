@@ -35,7 +35,7 @@ class TextViewModel @Inject constructor(
         fun changeEnding(original: String, ordinaryEnding: String, questionEnding: String): String {
             if (original.isEmpty()) return ""
             var result = ""
-            val normalEndingCharList =
+            val ordinaryEndingCharList =
                 arrayListOf('。', '!', '！', '」', '…', '\n', '　', ')', '）', '」', '』', '】', '.')
             val questionEndingCharList = arrayListOf('?', '？')
             val ordinaryEndingList = ordinaryEnding.split(' ')
@@ -44,7 +44,7 @@ class TextViewModel @Inject constructor(
             val isPreCharNormal = { index: Int ->
                 var value = index > 0
                 if (value) {
-                    value = value and (original[index - 1] !in normalEndingCharList)
+                    value = value and (original[index - 1] !in ordinaryEndingCharList)
                     value = value and (original[index - 1] !in questionEndingCharList)
                 }
                 value
@@ -52,14 +52,14 @@ class TextViewModel @Inject constructor(
 
             original.forEachIndexed { index, it ->
                 if (isPreCharNormal(index)) {
-                    if (it in normalEndingCharList)
+                    if (it in ordinaryEndingCharList)
                         result += ordinaryEndingList.random()
                     if (it in questionEndingCharList)
                         result += questionEndingList.random()
                 }
                 result += it
             }
-            if (original[original.lastIndex] !in normalEndingCharList)
+            if (original[original.lastIndex] !in ordinaryEndingCharList)
                 result += ordinaryEndingList.random()
             return result
         }
