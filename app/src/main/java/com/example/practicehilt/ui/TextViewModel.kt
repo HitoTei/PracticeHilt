@@ -15,8 +15,6 @@ class TextViewModel @Inject constructor(
     private val _endingChanged = MutableLiveData("")
     val endingChanged: LiveData<String> = _endingChanged
 
-    private val _doCopy = MutableLiveData(false)
-    val doCopy: LiveData<Boolean> = _doCopy
 
     fun covert() {
         _endingChanged.value = changeEnding(
@@ -26,17 +24,32 @@ class TextViewModel @Inject constructor(
         )
     }
 
-    fun copyConverted() {
-        _doCopy.value = true
-    }
-
     companion object {
         @JvmStatic
         fun changeEnding(original: String, ordinaryEnding: String, questionEnding: String): String {
             if (original.isEmpty()) return ""
             var result = ""
             val ordinaryEndingCharList =
-                arrayListOf('。', '!', '！', '」', '…', '\n', '　', ')', '）', '」', '』', '】', '.')
+                arrayListOf(
+                    '。',
+                    '!',
+                    '！',
+                    '」',
+                    '…',
+                    '\n',
+                    '　',
+                    '（',
+                    '(',
+                    ')',
+                    '）',
+                    '「',
+                    '『',
+                    '」',
+                    '』',
+                    '【',
+                    '】',
+                    '.',
+                )
             val questionEndingCharList = arrayListOf('?', '？')
             val ordinaryEndingList = ordinaryEnding.split(' ')
             val questionEndingList = questionEnding.split(' ')
@@ -59,7 +72,8 @@ class TextViewModel @Inject constructor(
                 }
                 result += it
             }
-            if (original[original.lastIndex] !in ordinaryEndingCharList)
+            val lastChar = original[original.lastIndex]
+            if (lastChar !in ordinaryEndingCharList && lastChar !in questionEndingCharList)
                 result += ordinaryEndingList.random()
             return result
         }
