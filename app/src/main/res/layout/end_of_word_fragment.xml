@@ -11,28 +11,30 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/editTextOrdinaryEnding"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:inputType="text"
             android:ems="10"
             android:hint="@string/ordinary_ending"
-            android:inputType="text"
             android:importantForAutofill="no"
+            android:textSize="14sp"
             android:text="@={viewModel.ordinaryEnding}" />
 
         <EditText
             android:id="@+id/editTextQuestionEnding"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:inputType="text"
             android:ems="10"
             android:hint="@string/question_ending"
-            android:inputType="text"
             android:importantForAutofill="no"
+            android:textSize="14sp"
             android:text="@={viewModel.questionEnding}" />
     </LinearLayout>
 </layout>

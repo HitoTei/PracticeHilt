@@ -6,48 +6,41 @@
             name="viewModel"
             type="com.example.practicehilt.ui.TextViewModel" />
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".ui.TextFragment">
 
+        <EditText
+            android:id="@+id/originalText"
+            style="@android:style/Widget.Material.EditText"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:ems="10"
+            android:hint="@string/input_text"
+            android:importantForAutofill="no"
+            android:inputType="textMultiLine"
+            android:text="@={viewModel.text}" />
+
         <Button
             android:id="@+id/convert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/convert"
-            android:onClick="@{() -> viewModel.covert()}" />
+            android:onClick="@{() -> viewModel.covert()}"
+            android:text="@string/convert" />
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="wrap_content">
 
-            <ScrollView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5">
-
-                <TextView
-                    android:id="@+id/convertedText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:onClick="@{() -> viewModel.copyConverted()}"
-                    android:text="@{viewModel.endingChanged}" />
-            </ScrollView>
-
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.5"
-                android:ems="10"
-                android:hint="@string/input_text"
-                android:importantForAutofill="no"
-                android:inputType="textMultiLine"
-                android:text="@={viewModel.text}" />
-        </LinearLayout>
+            <TextView
+                android:id="@+id/convertedText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.endingChanged}" />
+        </ScrollView>
 
     </LinearLayout>
 </layout>
